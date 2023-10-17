@@ -1,0 +1,39 @@
+@use "../../variables" as vars;
+
+.page {
+  padding: 46px 50px 44px;
+  display: flex;
+  flex-direction: column;
+  background: vars.$bg;
+  min-height: 100vh;
+}
+
+.header {
+  margin: 0 0 44px;
+  display: flex;
+  justify-content: space-between;
+
+  &__title {
+    margin: 0;
+    padding: 0;
+
+    @include vars.h1;
+  }
+
+  &__description {
+    margin: 0;
+    padding: 0;
+
+    @include vars.text-alt;
+  }
+}
+
+.main {
+  border-radius: vars.$radii;
+  background: vars.$bg-alt;
+  box-shadow: vars.$shadow;
+  display: flex;
+  align-items: flex-start;
+  flex: 1 0 0;
+  height: 100%;
+}

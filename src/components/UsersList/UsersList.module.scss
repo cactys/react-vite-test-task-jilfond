@@ -1,0 +1,11 @@
+@use "../../variables" as vars;
+
+.title {
+  margin: 0 0 10px;
+
+  @include vars.text;
+}
+
+.subtitle {
+  @include vars.text-additional;
+}

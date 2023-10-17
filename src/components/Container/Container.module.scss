@@ -1,0 +1,8 @@
+@use "../../variables" as vars;
+
+.container {
+  height: 100%;
+  display: flex;
+  flex: 1 auto;
+  align-items: flex-start;
+}

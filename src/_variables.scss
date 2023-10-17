@@ -1,0 +1,63 @@
+// text colors
+$primary: #333;
+$text-additional: #76787d;
+$text-red: #e31f24;
+
+// background colors
+$bg: #fff;
+$bg-alt: #fdfdfd;
+
+// border
+$shadow: 0 0 10px 0 #0000001a;
+$radii: 10px;
+$radii-input: 8px;
+$border: 1px solid #e0e0e0;
+
+// fonts
+$font-family-default: "Montserrat", sans-serif;
+
+// typography
+@mixin h1 {
+  color: $text-red;
+  font-family: $font-family-default;
+  font-size: 32px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+}
+
+@mixin text {
+  color: $primary;
+  font-family: $font-family-default;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 140%; /* 22.4px */
+}
+
+@mixin text-base {
+  color: $primary;
+  font-family: $font-family-default;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+}
+
+@mixin text-alt {
+  color: $primary;
+  font-family: $font-family-default;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+}
+
+@mixin text-additional {
+  color: $text-additional;
+  font-family: $font-family-default;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+}
