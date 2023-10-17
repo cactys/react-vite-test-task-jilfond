@@ -7,7 +7,9 @@ const Error = () => {
       <header className={styles.header} />
       <main className={styles.main}>
         <h1 className={styles.title}>Страница не найдена!</h1>
-        <Link className={styles.link}>Вернуться обратно</Link>
+        <Link className={styles.link} to="/">
+          Вернуться обратно
+        </Link>
       </main>
     </div>
   );

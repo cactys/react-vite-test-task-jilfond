@@ -16,6 +16,10 @@ $border: 1px solid #e0e0e0;
 // fonts
 $font-family-default: "Montserrat", sans-serif;
 
+// other
+$op-transition: opacity 0.4s ease-in;
+$opacity: 0.7;
+
 // typography
 @mixin h1 {
   color: $text-red;

@@ -25,3 +25,19 @@
   flex: 1 0 0;
   height: 100%;
 }
+
+.title {
+  margin: 0 0 22px;
+  @include vars.text;
+}
+
+.link {
+  text-decoration: none;
+  transition: vars.$op-transition;
+
+  @include vars.text-additional;
+
+  &:hover {
+    opacity: vars.$opacity;
+  }
+}

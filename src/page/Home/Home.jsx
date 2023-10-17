@@ -8,14 +8,17 @@ import UserDescription from '../UserDescription/UserDescription';
 const Home = () => {
   return (
     <Container>
-      <div className={styles.wrapper}>
-        <SearchUser
-          title="Поиск сотрудников"
-          placeholder="Введите id или имя"
-        />
-        <UsersList title="Результаты" subtitle="начните поиск" />
-      </div>
-      <UserDescription description="Выберите сотрудника, чтобы посмотреть его профиль" />
+      <>
+        <div className={styles.wrapper}>
+          <SearchUser
+            title="Поиск сотрудников"
+            placeholder="Введите id или имя"
+            type="text"
+          />
+          <UsersList title="Результаты" subtitle="начните поиск" />
+        </div>
+        <UserDescription description="Выберите сотрудника, чтобы посмотреть его профиль" />
+      </>
     </Container>
   );
 };

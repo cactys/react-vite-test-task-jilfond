@@ -1,8 +1,8 @@
 import { RouterProvider, createBrowserRouter } from 'react-router-dom'
 import Error from './page/Error/Error'
 import Layout from './components/Layout/Layout'
-import Home from './Page/Home/Home'
-import UserDescription from './Page/UserDescription/UserDescription'
+import Home from './page/Home/Home'
+import UserDescription from './page/UserDescription/UserDescription'
 
 const routes = [
   {
@@ -16,7 +16,7 @@ const routes = [
       },
       {
         path: '/users/:userId',
-        element: <UserDescription />,
+        element: <UserDescription description='' />,
       }
     ]
   }

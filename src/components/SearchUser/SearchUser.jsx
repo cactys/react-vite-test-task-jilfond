@@ -2,11 +2,11 @@ import PropType from 'prop-types';
 
 import styles from './SearchUser.module.scss';
 
-const SearchUser = ({ title, placeholder }) => {
+const SearchUser = ({ title, placeholder, type }) => {
   return (
     <>
       <h2 className={styles.title}>{title}</h2>
-      <input className={styles.input} placeholder={placeholder} />
+      <input className={styles.input} placeholder={placeholder} type={type} />
     </>
   );
 };
@@ -16,4 +16,5 @@ export default SearchUser;
 SearchUser.propTypes = {
   title: PropType.string.isRequired,
   placeholder: PropType.string.isRequired,
+  type: PropType.string.isRequired,
 };
