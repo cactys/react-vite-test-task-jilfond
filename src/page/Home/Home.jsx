@@ -1,11 +1,20 @@
-import styles from './Home.module.scss';
+import { useEffect } from 'react';
+import { useDispatch } from 'react-redux';
 
+import { fetchUsers } from '../../services/slice/userSlice';
 import Container from '../../components/Container/Container';
 import SearchUser from '../../components/SearchUser/SearchUser';
 import UsersList from '../../components/UsersList/UsersList';
-import UserDescription from '../UserDescription/UserDescription';
+import UserDescription from '../../components/UserDescription/UserDescription';
+import styles from './Home.module.scss';
 
 const Home = () => {
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(fetchUsers());
+  }, [dispatch]);
+
   return (
     <Container>
       <>

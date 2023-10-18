@@ -6,6 +6,16 @@
   @include vars.text;
 }
 
+.users-list {
+  height: 100%;
+  margin: 0;
+  padding: 0 9px 0 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  row-gap: 18px;
+}
+
 .subtitle {
   @include vars.text-additional;
 }
