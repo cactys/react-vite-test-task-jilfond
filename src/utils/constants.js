@@ -4,7 +4,7 @@ const BASE_URL = 'https://jsonplaceholder.typicode.com';
 
 const ALL_USERS = BASE_URL + '/users';
 
-const searchById = (id) => ALL_USERS + id;
+const searchById = (id) => ALL_USERS + '/' + id;
 
 const dataPropType = PropType.shape({
   id: PropType.number.isRequired,

@@ -3,7 +3,7 @@ import {
   createSlice,
   isRejectedWithValue,
 } from '@reduxjs/toolkit';
-import { ALL_USERS } from '../../utils/constants';
+import { ALL_USERS, searchById } from '../../utils/constants';
 
 export const fetchUsers = createAsyncThunk(
   'users/fetchUsers',
@@ -22,11 +22,40 @@ export const fetchUsers = createAsyncThunk(
   },
 );
 
+export const fetchUserById = createAsyncThunk(
+  'users/fetchUserById',
+  async function (data, { rejectWithValue, dispatch, getState }) {
+    const user = getState().users.users.find((user) => user.id === data.id);
+    console.log(user);
+
+    try {
+      const res = await fetch(searchById(user.id));
+
+      if (!res.ok) throw new Error('User not found!');
+
+      dispatch(selectUser(user));
+    } catch (err) {
+      return rejectWithValue(err.message);
+    }
+  },
+);
+
+const setLoading = (state) => {
+  state.status = 'loading';
+  state.error = null;
+};
+
+const setError = (state, action) => {
+  state.users = [];
+  state.status = 'rejected';
+  state.error = action.payload;
+};
+
 const initialState = {
   users: [],
   status: '',
   error: null,
-  user: null,
+  select: null,
 };
 
 const userSlice = createSlice({
@@ -34,25 +63,25 @@ const userSlice = createSlice({
   initialState,
   reducers: {
     selectUser(state, action) {
-      state.user = action.payload;
+      state.select = action.payload;
     },
   },
   extraReducers: (builder) => {
     builder
-      .addCase(fetchUsers.pending, (state) => {
-        state.status = 'loading';
-        state.error = null;
-      })
+      .addCase(fetchUsers.pending, setLoading)
+      .addCase(fetchUserById.pending, setLoading)
       .addCase(fetchUsers.fulfilled, (state, action) => {
         state.status = 'resolved';
         state.users = action.payload;
         state.error = null;
       })
-      .addMatcher(isRejectedWithValue(fetchUsers), (state, action) => {
-        state.users = [];
-        state.status = 'rejected';
-        state.error = action.payload;
-      });
+      .addCase(fetchUserById.fulfilled, (state, action) => {
+        state.status = 'resolved';
+        state.user = action.payload;
+        state.error = null;
+      })
+      .addMatcher(isRejectedWithValue(fetchUsers), setError)
+      .addMatcher(isRejectedWithValue(fetchUserById), setError);
   },
 });
 
