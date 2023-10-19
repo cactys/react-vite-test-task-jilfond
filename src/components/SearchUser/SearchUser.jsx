@@ -1,28 +1,24 @@
 import PropType from 'prop-types';
 
 import styles from './SearchUser.module.scss';
-import useValidationForm from '../../hooks/useValidationForm';
 
-const SearchUser = ({ title, placeholder, type }) => {
-  const { values, handleChange, isValid, setIsValid } = useValidationForm();
-
-  const handleSubmit = (evt) => {
-    evt.preventDefault();
+const SearchUser = ({ title, placeholder, type, search, setSearch }) => {
+  const handleSearch = (evt) => {
+    const { value } = evt.target;
+    setSearch(value);
   };
-
-  console.log(values.search);
 
   return (
     <>
       <h2 className={styles.title}>{title}</h2>
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSearch}>
         <input
           className={styles.input}
           placeholder={placeholder}
           name="search"
           type={type}
-          value={values.search || ''}
-          onChange={handleChange}
+          value={search}
+          onChange={handleSearch}
           required
         />
       </form>
@@ -36,4 +32,6 @@ SearchUser.propTypes = {
   title: PropType.string.isRequired,
   placeholder: PropType.string.isRequired,
   type: PropType.string.isRequired,
+  search: PropType.string.isRequired,
+  setSearch: PropType.func.isRequired,
 };
