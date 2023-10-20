@@ -1,11 +1,17 @@
 import PropType from 'prop-types';
 
 import styles from './SearchUser.module.scss';
+import { useDispatch, useStore } from 'react-redux';
+import { searchQuery } from '../../services/slice/userSlice';
 
-const SearchUser = ({ title, placeholder, type, search, setSearch }) => {
+const SearchUser = ({ title, placeholder, type }) => {
+  const { search } = useStore((state) => state.users);
+
+  const dispatch = useDispatch();
+
   const handleSearch = (evt) => {
     const { value } = evt.target;
-    setSearch(value);
+    dispatch(searchQuery(value));
   };
 
   return (
@@ -32,6 +38,4 @@ SearchUser.propTypes = {
   title: PropType.string.isRequired,
   placeholder: PropType.string.isRequired,
   type: PropType.string.isRequired,
-  search: PropType.string.isRequired,
-  setSearch: PropType.func.isRequired,
 };

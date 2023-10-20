@@ -56,6 +56,8 @@ const initialState = {
   status: '',
   error: null,
   select: null,
+  search: '',
+  filteredUsers: [],
 };
 
 const userSlice = createSlice({
@@ -64,6 +66,13 @@ const userSlice = createSlice({
   reducers: {
     selectUser(state, action) {
       state.select = action.payload;
+    },
+    searchQuery(state, action) {
+      state.search = action.payload;
+    },
+    searchUsers(state, action) {
+      console.log(action.payload);
+      state.filteredUsers = action.payload;
     },
   },
   extraReducers: (builder) => {
@@ -85,6 +94,6 @@ const userSlice = createSlice({
   },
 });
 
-export const { selectUser } = userSlice.actions;
+export const { selectUser, searchQuery, searchUsers } = userSlice.actions;
 
 export default userSlice.reducer;
