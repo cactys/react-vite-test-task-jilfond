@@ -5,7 +5,7 @@ import User from '../User/User';
 import { useSelector } from 'react-redux';
 
 const UsersList = ({ title, subtitle }) => {
-  const { filteredUsers } = useSelector((state) => state.users);
+  const { filteredUsers, search } = useSelector((state) => state.users);
 
   return (
     <>

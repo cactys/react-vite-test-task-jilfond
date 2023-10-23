@@ -22,11 +22,21 @@ export const fetchUsers = createAsyncThunk(
   },
 );
 
+export const fetchSearchUser = createAsyncThunk(
+  'users/fetchSearchUser',
+  async function (data, { rejectWithValue }) {
+    try {
+      const res
+    } catch (err) {
+      return rejectWithValue(err.message);
+    }
+  },
+);
+
 export const fetchUserById = createAsyncThunk(
   'users/fetchUserById',
   async function (data, { rejectWithValue, dispatch, getState }) {
     const user = getState().users.users.find((user) => user.id === data.id);
-    console.log(user);
 
     try {
       const res = await fetch(searchById(user.id));
@@ -68,11 +78,40 @@ const userSlice = createSlice({
       state.select = action.payload;
     },
     searchQuery(state, action) {
-      state.search = action.payload;
+      const string = action.payload;
+      state.search = string
+        .split(',')
+        .map((user) => {
+          const numberPatter = /\d+/g;
+          let subject = user.trim();
+          if (!subject) return '';
+
+          subject = subject.match(numberPatter)
+            ? `id=${subject}`
+            : `username=${subject}`;
+
+          return subject;
+        })
+        .join();
     },
     searchUsers(state, action) {
-      console.log(action.payload);
-      state.filteredUsers = action.payload;
+      const { searchQuery, users } = action.payload;
+
+      const arrPayload = searchQuery.split(',').map((item) => {
+        return item.trim();
+      });
+
+      arrPayload.forEach((item) => {
+        console.log(isFinite(item));
+        if (!isNaN(parseFloat(item)) && isFinite(item)) {
+          fetchUserById(item);
+        } else {
+          if (item) {
+            item = item[0].toLowerCase() + item.slice(1);
+            fetchUserById(item);
+          }
+        }
+      });
     },
   },
   extraReducers: (builder) => {
