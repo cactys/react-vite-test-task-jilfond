@@ -28,16 +28,16 @@ export const fetchUsers = createAsyncThunk(
 
 export const fetchSearchUser = createAsyncThunk(
   'users/fetchSearchUser',
-  async function (data, { rejectWithValue }) {
+  async function (data, { rejectWithValue, dispatch }) {
     try {
-      console.log(data);
       const res = await fetch(searchUserByUsernameAndId(data));
 
       if (!res.ok) throw new Error('Server Error!');
 
-      const users = await res.json();
+      let users = [];
 
-      console.log(users);
+      if (data.length) users = await res.json();
+      dispatch(filteredUsers(users));
 
       return users;
     } catch (err) {
@@ -103,8 +103,7 @@ const userSlice = createSlice({
           subject = subject.match(numberPatter)
             ? `id=${subject}`
             : `username=${
-                subject.charAt(0).toUpperCase() +
-                subject.slice(1).toLowerCase()
+                subject.charAt(0).toUpperCase() + subject.slice(1).toLowerCase()
               }`;
 
           return subject;
@@ -123,7 +122,9 @@ const userSlice = createSlice({
       });
     },
     filteredUsers(state, action) {
-      console.log(action);
+      action.payload.length
+        ? (state.filteredUsers = action.payload)
+        : (state.filteredUsers = []);
     },
   },
   extraReducers: (builder) => {
@@ -145,6 +146,7 @@ const userSlice = createSlice({
   },
 });
 
-export const { selectUser, searchQuery, searchUsers } = userSlice.actions;
+export const { selectUser, searchQuery, searchUsers, filteredUsers } =
+  userSlice.actions;
 
 export default userSlice.reducer;
