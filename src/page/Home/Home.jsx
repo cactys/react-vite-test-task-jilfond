@@ -1,7 +1,11 @@
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { fetchUsers, searchUsers } from '../../services/slice/userSlice';
+import {
+  fetchSearchUser,
+  fetchUsers,
+  searchUsers,
+} from '../../services/slice/userSlice';
 import Container from '../../components/Container/Container';
 import SearchUser from '../../components/SearchUser/SearchUser';
 import UsersList from '../../components/UsersList/UsersList';
@@ -9,7 +13,7 @@ import UserDescription from '../../components/UserDescription/UserDescription';
 import styles from './Home.module.scss';
 
 const Home = () => {
-  const { search, users } = useSelector((state) => state.users);
+  const { search, users, arrSearch } = useSelector((state) => state.users);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -17,8 +21,9 @@ const Home = () => {
   }, [dispatch, search, users]);
 
   useEffect(() => {
+    dispatch(fetchSearchUser(arrSearch));
     dispatch(fetchUsers());
-  }, [dispatch]);
+  }, [arrSearch, dispatch]);
 
   return (
     <Container>

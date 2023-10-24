@@ -3,7 +3,11 @@ import {
   createSlice,
   isRejectedWithValue,
 } from '@reduxjs/toolkit';
-import { ALL_USERS, searchById } from '../../utils/constants';
+import {
+  ALL_USERS,
+  searchById,
+  searchUserByUsernameAndId,
+} from '../../utils/constants';
 
 export const fetchUsers = createAsyncThunk(
   'users/fetchUsers',
@@ -26,7 +30,16 @@ export const fetchSearchUser = createAsyncThunk(
   'users/fetchSearchUser',
   async function (data, { rejectWithValue }) {
     try {
-      const res
+      console.log(data);
+      const res = await fetch(searchUserByUsernameAndId(data));
+
+      if (!res.ok) throw new Error('Server Error!');
+
+      const users = await res.json();
+
+      console.log(users);
+
+      return users;
     } catch (err) {
       return rejectWithValue(err.message);
     }
@@ -67,6 +80,7 @@ const initialState = {
   error: null,
   select: null,
   search: '',
+  arrSearch: '',
   filteredUsers: [],
 };
 
@@ -88,30 +102,28 @@ const userSlice = createSlice({
 
           subject = subject.match(numberPatter)
             ? `id=${subject}`
-            : `username=${subject}`;
+            : `username=${
+                subject.charAt(0).toUpperCase() +
+                subject.slice(1).toLowerCase()
+              }`;
 
           return subject;
         })
-        .join();
+        .join('&');
     },
     searchUsers(state, action) {
-      const { searchQuery, users } = action.payload;
+      const { searchQuery } = action.payload;
 
       const arrPayload = searchQuery.split(',').map((item) => {
         return item.trim();
       });
 
       arrPayload.forEach((item) => {
-        console.log(isFinite(item));
-        if (!isNaN(parseFloat(item)) && isFinite(item)) {
-          fetchUserById(item);
-        } else {
-          if (item) {
-            item = item[0].toLowerCase() + item.slice(1);
-            fetchUserById(item);
-          }
-        }
+        state.arrSearch = item;
       });
+    },
+    filteredUsers(state, action) {
+      console.log(action);
     },
   },
   extraReducers: (builder) => {
